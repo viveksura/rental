@@ -1,0 +1,2 @@
+class PropertyOccupancy < ApplicationRecord
+end

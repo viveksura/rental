@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_23_155520) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_23_173436) do
+  create_table "properties", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "property_type", default: 0
+    t.integer "property_manager_id", null: false
+    t.date "available_from"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "property_occupancies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "property_id", null: false
+    t.integer "renter_id", null: false
+    t.date "from_date", null: false
+    t.date "to_date", null: false
+    t.float "rent", default: 0.0, null: false
+    t.string "rental_agreement", default: "0", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
