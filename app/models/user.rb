@@ -3,6 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  enum :user_type, [:default, :property_manager, :receptionist]
+  enum :user_type, ["Renter", "PropertyManager", "Receptionist"]
+  self.inheritance_column = 'user_type'
   
 end

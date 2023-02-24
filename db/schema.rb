@@ -15,6 +15,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_173436) do
     t.integer "property_type", default: 0
     t.integer "property_manager_id", null: false
     t.date "available_from"
+    t.integer "rent", default: 0, null: false
+    t.string "address"
+    t.integer "size", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

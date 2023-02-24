@@ -1,0 +1,4 @@
+class Receptionist < User
+    
+end
+  
