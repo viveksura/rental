@@ -1,0 +1,17 @@
+<div> Available Properties </div>
+<div class="grid">
+    <% @properties.each do |property| %>
+        <div class="property">
+            <a href = "properties/<%= property.id%>/show" >
+                <img style="float: left;" src= "https://upload.wikimedia.org/wikipedia/commons/d/d6/Studio_Apartment_Minneapolis_1.jpg" height="100px" width="150px"/>
+                <div style="float:right;">   
+                    <div> <%= property.property_type.titlecase %> </div>
+                    <div> <%= property.size %> Sq.Ft </div>
+                    <div> $<%= property.rent %> PM  </div>
+                    <div> Available from : <%= property.available_from %> </div>
+                    <div> Address : #<%= property.address %> </div>
+                </div>
+            </a>
+        </div>
+    <% end %>
+</div>

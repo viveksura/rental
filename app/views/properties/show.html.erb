@@ -1,0 +1,19 @@
+<h1 style="text-align: center; color: #0d0000;"> #<%= @property.address %> </h1>
+
+<div>
+    <div class="grid" style="grid-template-columns: repeat(4, 1fr); float: left">
+        <% @images.each do |image| %>
+            <div class="property">   
+                <img src= "<%= image['url'] %>" height="200px" width="300px"/>
+                <div style="text-align: center;"> <%= image['description'] %> </div>
+            </div>
+        <% end %>
+    </div>
+    <div style="padding-left: 50px; float: left;">
+        <div style="padding: 10px;"> Property Type: <%= @property.property_type.titlecase %> </div>
+        <div style="padding: 10px;"> Property Size: <%= @property.size %> Sq.Ft </div>
+        <div style="padding: 10px;"> Rent Per Month: $<%= @property.rent %> </div>
+        <div style="padding: 10px;"> Available from : <%= @property.available_from %> </div>
+        <button style="padding: 10px;"> Test </button>
+    </div>
+</div>
