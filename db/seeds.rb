@@ -48,4 +48,7 @@ end
         rental_agreement: "https://s3-url.com"
     )
     
+    property.available_from = Date.today + ((i * 2) + 1).days
+    property.save!
 end
+
