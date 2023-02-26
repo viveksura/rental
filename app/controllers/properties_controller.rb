@@ -6,22 +6,19 @@ class PropertiesController < ApplicationController
             @properties = apply_filter_and_sort(Property.all, params)
             @params = params
         else
-            redirect_to "/404.html"
+            redirect_to "/422.html"
         end
     end
 
     def show
-        if current_user.Renter? && false
-           @property =  current_user&.current_rental_property
-        elsif current_user.PropertyManager?
+        if current_user.PropertyManager?
             @property = Property.where(id: params[:id]).first
         else
-            @property = Property.where(id: params[:id]).first
+            @property = Property.available_properties.where(id: params[:id]).first
         end
+        @current_occupancy = @property&.current_occupancy
 
-        if @property && @property.id == params[:id].to_i
-            @current_occupancy = @property&.current_occupancy || PropertyOccupancy.first
-        else
+        unless @property
             redirect_to "/404.html"
         end
     end
@@ -43,6 +40,12 @@ class PropertiesController < ApplicationController
     
     def book_appointment
         Rails.logger.debug "params = #{params.inspect}"
+        if current_user.Renter?
+            Appointment.create!(renter_id: current_user.id, property_id: params[:id], date: params[:date], time: params[:time])
+            redirect_to "/properties/#{params[:id]}/show", notice: "Appointment Booked"
+        else
+            redirect_to "/422.html"
+        end
     end
 
     private

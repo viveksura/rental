@@ -18,5 +18,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :appointments, only: [:index] do
+    
+  end
+
   root "properties#available"
 end

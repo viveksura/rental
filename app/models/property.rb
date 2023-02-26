@@ -1,6 +1,7 @@
 class Property < ApplicationRecord
     belongs_to :manager, class_name: "PropertyManager", foreign_key: "property_manager_id"
     has_many :property_occupancies
+    has_many :appointments
   
     enum :property_type, [:studio, :one_bedroom, :two_bedroom, :duplex]
 
@@ -44,6 +45,8 @@ class Property < ApplicationRecord
     end
 
     def booked_visiting_slots
-        []
+        self.appointments.where("created_at >= ?", Date.today).map do |appointment|
+            {date: appointment.date, time: appointment.time}
+        end
     end
 end

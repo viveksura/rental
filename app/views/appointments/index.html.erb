@@ -1,0 +1,22 @@
+<h1 style="text-align: center; color: #0d0000;"> Appointments </h1>
+
+<% if @appointments.present? %> 
+  <table>
+    <tr>
+      <th>Property</th>
+      <th>Visitor</th>
+      <th>Property Manager</th> 
+      <th>Date & Time</th>
+    </tr>
+    <% @appointments.each do |appointment| %>
+      <tr>
+        <td> <%= appointment.property.address %></td>
+        <td><%= appointment.renter.email %></td>
+        <td><%= appointment.property.manager.email %></td>
+        <td><%= "#{appointment.date} #{appointment.time}" %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %> 
+  <div> No Appointments scheduled </div>
+<% end %>
