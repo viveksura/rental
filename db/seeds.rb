@@ -52,3 +52,104 @@ end
     property.save!
 end
 
+Property.where(property_type: 0).each do |property|
+    images = [
+        {
+            "url" => "https://upload.wikimedia.org/wikipedia/commons/d/d6/Studio_Apartment_Minneapolis_1.jpg",
+            "title" => "Studio",
+        }, 
+        {
+            "url" => "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fill,g_center,w_730,h_487/at%2Fhouse%20tours%20stock%20archive%2Ffa4f696375867ca1116f9939843ed3ae21b83c88",
+            "title" => "Kitchen",
+        }, 
+        {
+            "url" => "https://i.shgcdn.com/06925221-ef7c-4b3e-a4d1-9d1e2ae8698f/-/format/auto/-/preview/3000x3000/-/quality/lighter/",
+            "title" => "Balcony",
+        }, 
+        {
+            "url" => "https://images.squarespace-cdn.com/content/v1/5b4e6b87266c074121c335e9/1588964669255-MKCIAKN2QI2K4Y1D8KB6/small+apartment+bathroom+ideas.jpg?",
+            "title" => "Bathroom",
+        }, 
+    ]
+    property.metadata = { "images" => images }
+    property.save!
+end
+
+
+Property.where(property_type: 1).each do |property|
+    images = [
+        {
+            "url" => "https://www.shutterstock.com/image-illustration/small-apartment-kitchen-living-room-600w-630857810.jpg",
+            "title" => "Living Room",
+        }, 
+        {
+            "url" => "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fill,g_center,w_730,h_487/at%2Fhouse%20tours%20stock%20archive%2Ffa4f696375867ca1116f9939843ed3ae21b83c88",
+            "title" => "Kitchen",
+        }, 
+        {
+            "url" => "https://i.shgcdn.com/06925221-ef7c-4b3e-a4d1-9d1e2ae8698f/-/format/auto/-/preview/3000x3000/-/quality/lighter/",
+            "title" => "Balcony",
+        }, 
+        {
+            "url" => "https://images.squarespace-cdn.com/content/v1/5b4e6b87266c074121c335e9/1588964669255-MKCIAKN2QI2K4Y1D8KB6/small+apartment+bathroom+ideas.jpg?",
+            "title" => "Bathroom",
+        }, 
+    ]
+    property.metadata = { "images" => images }
+    property.save!
+end
+
+
+Property.where(property_type: 2).each do |property|
+    images = [
+        {
+            "url" => "https://fpg.roomsketcher.com/image/topic/28/image/2-Bedroom-Apartment-Plan-3D.jpg",
+            "title" => "Plan"
+        },
+        {
+            "url" => "https://www.shutterstock.com/image-illustration/small-apartment-kitchen-living-room-600w-630857810.jpg",
+            "title" => "Living Room",
+        }, 
+        {
+            "url" => "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fill,g_center,w_730,h_487/at%2Fhouse%20tours%20stock%20archive%2Ffa4f696375867ca1116f9939843ed3ae21b83c88",
+            "title" => "Kitchen",
+        }, 
+        {
+            "url" => "https://i.shgcdn.com/06925221-ef7c-4b3e-a4d1-9d1e2ae8698f/-/format/auto/-/preview/3000x3000/-/quality/lighter/",
+            "title" => "Balcony",
+        }, 
+        {
+            "url" => "https://images.squarespace-cdn.com/content/v1/5b4e6b87266c074121c335e9/1588964669255-MKCIAKN2QI2K4Y1D8KB6/small+apartment+bathroom+ideas.jpg?",
+            "title" => "Bathroom",
+        }, 
+    ]
+    property.metadata = { "images" => images }
+    property.save!
+end
+
+Property.where(property_type: 3).each do |property|
+    images = [
+        {
+            "url" => "https://www.hamiltoninternationalestates.com/admin/uploads/news/What%20is%20a%20Duplex%20House88-881608272400.jpg",
+            "title" => "Duplex"
+        },
+        {
+            "url" => "https://www.shutterstock.com/image-illustration/small-apartment-kitchen-living-room-600w-630857810.jpg",
+            "title" => "Living Room",
+        }, 
+        {
+            "url" => "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fill,g_center,w_730,h_487/at%2Fhouse%20tours%20stock%20archive%2Ffa4f696375867ca1116f9939843ed3ae21b83c88",
+            "title" => "Kitchen",
+        }, 
+        {
+            "url" => "https://i.shgcdn.com/06925221-ef7c-4b3e-a4d1-9d1e2ae8698f/-/format/auto/-/preview/3000x3000/-/quality/lighter/",
+            "title" => "Balcony",
+        }, 
+        {
+            "url" => "https://images.squarespace-cdn.com/content/v1/5b4e6b87266c074121c335e9/1588964669255-MKCIAKN2QI2K4Y1D8KB6/small+apartment+bathroom+ideas.jpg?",
+            "title" => "Bathroom",
+        }, 
+    ]
+    property.metadata = { "images" => images }
+    property.save!
+end

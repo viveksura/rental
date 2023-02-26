@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_26_024120) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_26_060340) do
   create_table "appointments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "property_id", null: false
     t.integer "renter_id", null: false
@@ -29,6 +29,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_26_024120) do
     t.integer "size", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.json "metadata"
   end
 
   create_table "property_occupancies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

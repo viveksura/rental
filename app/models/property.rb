@@ -19,15 +19,7 @@ class Property < ApplicationRecord
     end
 
     def images
-        list = []
-        # get this data from metadata column in property
-        10.times do |t|
-            list.push({
-                "url" => "https://upload.wikimedia.org/wikipedia/commons/d/d6/Studio_Apartment_Minneapolis_1.jpg",
-                "description" => "#{t} room"
-            })
-        end
-        list
+        self.metadata["images"]
     end
 
     def available_visiting_slots

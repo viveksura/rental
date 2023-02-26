@@ -26,7 +26,7 @@
     <% @properties.each do |property| %>
         <div class="property">
             <a href = "/properties/<%= property.id%>" >
-                <img style="float: left;" src= "https://upload.wikimedia.org/wikipedia/commons/d/d6/Studio_Apartment_Minneapolis_1.jpg" height="100px" width="150px"/>
+                <img style="float: left;" src= "<%= property.images.first['url']%>" height="100px" width="150px"/>
                 <div style="float:right;">   
                     <div> <%= property.property_type.titlecase %> </div>
                     <div> <%= property.size %> Sq.Ft </div>
