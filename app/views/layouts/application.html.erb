@@ -11,24 +11,26 @@
 
   <body>
     <div class="container wrapper">
-      <div class="sidebar" style="float: left;">
-          <h1 style="text-align: center; color: #0d0000;"> Rental </h1>
-          <% if current_user.PropertyManager? %>
-            <a href="/properties/all"> All Properties </a>
-            <a href="/properties/available"> Available Properties </a>
-            <a href="/properties/managed"> My Properties </a>
-            <a href="/appointments"> Scheduled Appointments </a>
-          <% elsif current_user.Renter? %>
-            <a href="/properties/available"> Available Properties </a>
-            <% if current_user&.current_occupancy.present? %>
-              <a href="/properties/<%= current_user&.current_occupancy.property_id%>"> My Property </a>
+      <% if current_user %> 
+        <div class="sidebar" style="float: left;">
+            <h1 style="text-align: center; color: #0d0000;"> Rental </h1>
+            <% if current_user.PropertyManager? %>
+              <a href="/properties/all"> All Properties </a>
+              <a href="/properties/available"> Available Properties </a>
+              <a href="/appointments"> Scheduled Appointments </a>
+            <% elsif current_user.Renter? %>
+              <a href="/properties/available"> Available Properties </a>
+              <% if current_user&.current_occupancy.present? %>
+                <a href="/properties/<%= current_user&.current_occupancy.property_id%>"> My Property </a>
+              <% end %>
+              <a href="/appointments"> Scheduled Appointments </a>
+            <% elsif current_user.Receptionist? %>
+              <a href="/properties/available"> Available Properties </a>
+              <a href="/appointments"> Scheduled Appointments </a>
             <% end %>
-            <a href="/appointments"> Scheduled Appointments </a>
-          <% else %>
-            <a href="/properties/available"> Available Properties </a>
-            <a href="/appointments"> Scheduled Appointments </a>
-          <% end %>
-      </div>
+            <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false } %>
+        </div>
+      <% end %>
       <div class="content" style="float: right;">
         <%= yield %>
       </div>

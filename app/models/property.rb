@@ -11,7 +11,7 @@ class Property < ApplicationRecord
     end
 
     def current_occupancy
-        PropertyOccupancy.where(property_id: self.id).where("from_date >= ? and to_date <= ?", Date.today, Date.today).first
+        PropertyOccupancy.where(property_id: self.id).where("from_date <= ? and to_date >= ?", Date.today, Date.today).first
     end
 
     def current_renter

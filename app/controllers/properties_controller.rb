@@ -29,20 +29,25 @@ class PropertiesController < ApplicationController
     end
 
     def update
-        property = Property.where(manager_id: current_user.id, id: params[:id]).first
+        Rails.logger.debug "params = #{params.inspect}"
+        property = Property.where(property_manager_id: current_user.id, id: params[:id]).first
         if property
-            property.update(rent: params[:rent])
-            redirect_to property_show
+            property.update(rent: params["property"]["rent"])
+            redirect_to property_path(params[:id]), notice: "Rent Updated"
         else
             redirect_to "/422.html"
         end
     end
     
     def book_appointment
-        Rails.logger.debug "params = #{params.inspect}"
         if current_user.Renter?
-            Appointment.create!(renter_id: current_user.id, property_id: params[:id], date: params[:date], time: params[:time])
-            redirect_to "/properties/#{params[:id]}/show", notice: "Appointment Booked"
+            existing_appointments = Appointment.where(date: params[:date], time: params[:time]).where("property_id = ? or renter_id = ?", params[:id], current_user.id)
+            if existing_appointments.blank?
+                Appointment.create!(renter_id: current_user.id, property_id: params[:id], date: params[:date], time: params[:time])
+                redirect_to "/properties/#{params[:id]}/show", notice: "Appointment Booked"
+            else
+                redirect_to "/422.html", notice: "Appointment not booked"
+            end
         else
             redirect_to "/422.html"
         end
@@ -51,7 +56,9 @@ class PropertiesController < ApplicationController
     private
 
     def apply_filter_and_sort(properties, params)
-        if params["filter"] && params["filter"] != "all"
+        if params["filter"] && params["filter"] == "my_properties"
+            properties = properties.where(property_manager_id: current_user.id)
+        elsif params["filter"] && params["filter"] != "all"
             properties = properties.where(property_type: params["filter"])
         end
 

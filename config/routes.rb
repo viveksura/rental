@@ -5,15 +5,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
 
 
-  resources :properties, only: [] do
+  resources :properties, only: [:update, :show] do
     collection do
       get "all"
       get "available"
     end
 
     member do
-      get "show"
-      put "update"
       post "book_appointment"
     end
   end

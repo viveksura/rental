@@ -1,9 +1,10 @@
 <h1 style="text-align: center; color: #0d0000;"> All Properties </h1>
 
 <div style="float: right; margin-left: auto; margin-right: 0;">
-    <form action="/properties/available">
+    <form action="/properties/all">
         <select name="filter" id="filter" style="width: 150px; font-size:10px; padding: 10px; margin: 20px;">
             <option value="all" <%= (@params["filter"] == "all") ? "selected" : "" %> >All</option>
+            <option value="my_properties" <%= (@params["filter"] == "my_properties") ? "selected" : "" %> >Managed By Me</option>
             <option value="studio" <%= (@params["filter"] == "studio") ? "selected" : "" %> >Studio</option>
             <option value="one_bedroom" <%= (@params["filter"] == "one_bedroom") ? "selected" : "" %> >One Bedroom</option>
             <option value="two_bedroom" <%= (@params["filter"] == "two_bedroom") ? "selected" : "" %> >Two Bedroom</option>
@@ -24,7 +25,7 @@
 <div class="grid">
     <% @properties.each do |property| %>
         <div class="property">
-            <a href = "/properties/<%= property.id%>/show" >
+            <a href = "/properties/<%= property.id%>" >
                 <img style="float: left;" src= "https://upload.wikimedia.org/wikipedia/commons/d/d6/Studio_Apartment_Minneapolis_1.jpg" height="100px" width="150px"/>
                 <div style="float:right;">   
                     <div> <%= property.property_type.titlecase %> </div>

@@ -14,25 +14,38 @@
         <div style="padding: 10px;"> Property Size: <%= @property.size %> Sq.Ft </div>
 
         <% if @property.property_manager_id == current_user.id || @property.current_occupancy&.renter_id == current_user.id %>
-            <div style="padding: 10px;"> Current Rent Per Month: $<%= @property.current_occupancy.rent %> </div>
+            <div style="padding: 10px;"> Current Rent Per Month: $<%= @property.current_occupancy&.rent %> </div>
+            <a style="padding: 10px;" href="<%= @property.current_occupancy&.rental_agreement %>"> Rental Agreement </a>
+        <% end %>
+
+        <div style="padding: 10px;"> Rent Per Month (WEF <%= Date.today.end_of_month + 1.day %>): $<%= @property.rent %> </div>
+        <div style="padding: 10px;"> Available from: <%= @property.available_from %> </div>
+        <br>
+
+        <% if current_user.Renter? && @property.current_occupancy&.renter_id != current_user.id %>
+            <% current_appointments = current_user.appointments.where(property_id: @property_id).where("created_at >= ?", Date.today) %>
+            <% if current_appointments.present? %>
+                <div style="padding: 10px;"> Appointments Scheduled: </div>
+                <% current_appointments.each do |appointment| %>
+                    <div> <%= "#{appointment.date} #{appointment.time}" %> </div> 
+                <% end %>
+            <% else %>
+                <div style="padding: 10px;"> Schedule Visit: </div>
+                <div class="grid" style="padding: 10px; grid-template-columns: repeat(1, 1fr);">
+                <% @property.available_visiting_slots.each do |slot| %>
+                    <% button_name = "#{slot[:date]} #{slot[:time]}" %>
+                    <%= button_to button_name, { action: "book_appointment", id: @property.id }, method: :post, data: { confirm: "Are you sure?" }, params: slot %>
+                <% end %>
+                </div>
+            <% end %>
         <% end %>
 
         <% if @property.property_manager_id == current_user.id %>
-            <div style="padding: 10px;"> Rent Per Month: $<%= @property.rent %> </div>
-        <% else %>
-            <div style="padding: 10px;"> Rent Per Month: $<%= @property.rent %> </div>
+            <%= form_with model: @property, url: property_path(@property), method: :patch, local: true do |f| %>
+                <%= f.text_field :rent %>
+                <%= f.submit "Update rent" %>
+            <% end %>
         <% end %>
         
-        <div style="padding: 10px;"> Available from: <%= @property.available_from %> </div>
-        <br>
-        <% if current_user.Renter? && @property.current_occupancy&.renter_id != current_user.id %>
-            <div style="padding: 10px;"> Schedule Visit: </div>
-            <div class="grid" style="padding: 10px; grid-template-columns: repeat(1, 1fr);">
-            <% @property.available_visiting_slots.each do |slot| %>
-                <% button_name = "#{slot[:date]} #{slot[:time]}" %>
-                <%= button_to button_name, { action: "book_appointment", id: @property.id }, method: :post, data: { confirm: "Are you sure?" }, params: slot %>
-            <% end %>
-            </div>
-        <% end %>
     </div>
 </div>
