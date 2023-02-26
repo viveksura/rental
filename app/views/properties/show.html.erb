@@ -1,8 +1,8 @@
 <h1 style="text-align: center; color: #0d0000;"> #<%= @property.address %> </h1>
 
 <div>
-    <div class="grid" style="grid-template-columns: repeat(4, 1fr); float: left">
-        <% @images.each do |image| %>
+    <div class="grid" style="grid-template-columns: repeat(3, 1fr); float: left">
+        <% @property.images.each do |image| %>
             <div class="property">   
                 <img src= "<%= image['url'] %>" height="200px" width="300px"/>
                 <div style="text-align: center;"> <%= image['description'] %> </div>
@@ -12,8 +12,27 @@
     <div style="padding-left: 50px; float: left;">
         <div style="padding: 10px;"> Property Type: <%= @property.property_type.titlecase %> </div>
         <div style="padding: 10px;"> Property Size: <%= @property.size %> Sq.Ft </div>
-        <div style="padding: 10px;"> Rent Per Month: $<%= @property.rent %> </div>
-        <div style="padding: 10px;"> Available from : <%= @property.available_from %> </div>
-        <button style="padding: 10px;"> Test </button>
+
+        <% if @property.property_manager_id == current_user.id || @property.current_occupancy&.renter_id == current_user.id %>
+            <div style="padding: 10px;"> Current Rent Per Month: $<%= @property.current_occupancy.rent %> </div>
+        <% end %>
+
+        <% if @property.property_manager_id == current_user.id %>
+            <div style="padding: 10px;"> Rent Per Month: $<%= @property.rent %> </div>
+        <% else %>
+            <div style="padding: 10px;"> Rent Per Month: $<%= @property.rent %> </div>
+        <% end %>
+        
+        <div style="padding: 10px;"> Available from: <%= @property.available_from %> </div>
+        <br>
+        <% if current_user.Renter? && @property.current_occupancy&.renter_id != current_user.id %>
+            <div style="padding: 10px;"> Schedule Visit: </div>
+            <div class="grid" style="padding: 10px; grid-template-columns: repeat(1, 1fr);">
+            <% @property.available_visiting_slots.each do |slot| %>
+                <% button_name = "#{slot[:date]} #{slot[:time]}" %>
+                <%= button_to button_name, { action: "book_appointment", id: @property.id }, method: :post, data: { confirm: "Are you sure?" }, params: slot %>
+            <% end %>
+            </div>
+        <% end %>
     </div>
 </div>

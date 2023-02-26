@@ -13,7 +13,8 @@ Rails.application.routes.draw do
 
     member do
       get "show"
-      put "update_rent"
+      put "update"
+      post "book_appointment"
     end
   end
 

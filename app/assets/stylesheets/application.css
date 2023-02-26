@@ -14,7 +14,6 @@
  *= require_self
  */
 
-@import "compass/css3";
 
 *, *:before, *:after {
   box-sizing: border-box;
@@ -196,11 +195,54 @@ textarea {
 .grid {
   display: grid;
   grid-template-rows: repeat(3, 1fr);
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
 }
 .grid > div {
   background-color: rgb(15, 15, 15);
   color: white;
   padding: 10px;
+}
+
+body {
+  margin: 0;
+  padding:0;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar,
+.content {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  color: rgb(16, 0, 0);
+  min-height: 500px;
+  border-radius: 4px;
+  margin: 20px;
+  border:0px solid #777;
+}
+
+.sidebar {
+  flex-grow: 1;
+  min-width: 100px;
+  max-width: 200px;
+  position: sticky;
+  top: 0;
+}
+
+.content {
+  flex-grow: 5;
+  min-width: 630px;
+}
+
+
+.sidebar > a {
+  font-family: "Segoe UI",Arial,sans-serif;
+  text-decoration: none;
+  display: block;
+  padding: 2px 1px 1px 16px;
 }

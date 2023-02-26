@@ -1,8 +1,30 @@
-<div> Available Properties </div>
+<h1 style="text-align: center; color: #0d0000;"> Available Properties </h1>
+
+<div style="float: right; margin-left: auto; margin-right: 0;">
+    <form action="/properties/available">
+        <select name="filter" id="filter" style="width: 150px; font-size:10px; padding: 10px; margin: 20px;">
+            <option value="all" <%= (@params["filter"] == "all") ? "selected" : "" %> >All</option>
+            <option value="studio" <%= (@params["filter"] == "studio") ? "selected" : "" %> >Studio</option>
+            <option value="one_bedroom" <%= (@params["filter"] == "one_bedroom") ? "selected" : "" %> >One Bedroom</option>
+            <option value="two_bedroom" <%= (@params["filter"] == "two_bedroom") ? "selected" : "" %> >Two Bedroom</option>
+            <option value="duplex" <%= (@params["filter"] == "duplex") ? "selected" : "" %> >Duplex</option>
+        </select>
+
+        <select name="sort" id="sort" style="width: 150px; font-size:10px; padding: 10px; margin: 20px;">
+            <option value="availability" <%= (@params["sort"] == "availability") ? "selected" : "" %> >Availability</option>
+            <option value="rent_low_to_high" <%= (@params["sort"] == "rent_low_to_high") ? "selected" : "" %> >Rent - Low to High</option>
+            <option value="rent_high_to_low" <%= (@params["sort"] == "rent_high_to_low") ? "selected" : "" %> >Rent - High to Low</option>
+            <option value="size_low_to_high" <%= (@params["sort"] == "size_low_to_high") ? "selected" : "" %> >Size - Low to High</option>
+            <option value="size_high_to_low" <%= (@params["sort"] == "size_high_to_low") ? "selected" : "" %> >Size - Low to High</option>
+        </select>
+        <input type="submit" value="Apply" style="width: 100px; font-size:10px; float: right; padding: 10px; margin: 20px;">
+    </form>
+</div>
+<br>
 <div class="grid">
     <% @properties.each do |property| %>
         <div class="property">
-            <a href = "properties/<%= property.id%>/show" >
+            <a href = "/properties/<%= property.id%>/show" >
                 <img style="float: left;" src= "https://upload.wikimedia.org/wikipedia/commons/d/d6/Studio_Apartment_Minneapolis_1.jpg" height="100px" width="150px"/>
                 <div style="float:right;">   
                     <div> <%= property.property_type.titlecase %> </div>

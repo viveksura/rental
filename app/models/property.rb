@@ -16,4 +16,34 @@ class Property < ApplicationRecord
     def current_renter
         current_occupancy&.renter
     end
+
+    def images
+        list = []
+        # get this data from metadata column in property
+        10.times do |t|
+            list.push({
+                "url" => "https://upload.wikimedia.org/wikipedia/commons/d/d6/Studio_Apartment_Minneapolis_1.jpg",
+                "description" => "#{t} room"
+            })
+        end
+        list
+    end
+
+    def available_visiting_slots
+        slots = []
+        if self.available_from <= (Date.today + 5.months)
+            3.times do |i|
+                date = Date.today + (i + 1).days
+                slots.push({date: date, time: "09:00 AM"})
+                slots.push({date: date, time: "09:30 AM"})
+                slots.push({date: date, time: "10:00 AM"})
+            end
+        end
+        slots -= booked_visiting_slots
+        slots
+    end
+
+    def booked_visiting_slots
+        []
+    end
 end

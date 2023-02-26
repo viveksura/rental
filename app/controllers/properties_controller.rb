@@ -3,7 +3,8 @@ class PropertiesController < ApplicationController
 
     def all
         if current_user.PropertyManager?
-            @properties = Property.all
+            @properties = apply_filter_and_sort(Property.all, params)
+            @params = params
         else
             redirect_to "/404.html"
         end
@@ -20,23 +21,17 @@ class PropertiesController < ApplicationController
 
         if @property && @property.id == params[:id].to_i
             @current_occupancy = @property&.current_occupancy || PropertyOccupancy.first
-            @images = []
-            10.times do |t|
-                @images.push({
-                    "url" => "https://upload.wikimedia.org/wikipedia/commons/d/d6/Studio_Apartment_Minneapolis_1.jpg",
-                    "description" => "#{t} room"
-                })
-            end
         else
             redirect_to "/404.html"
         end
     end
 
     def available
-        @properties = Property.available_properties
+        @properties = apply_filter_and_sort(Property.available_properties, params)
+        @params = params
     end
 
-    def update_rent
+    def update
         property = Property.where(manager_id: current_user.id, id: params[:id]).first
         if property
             property.update(rent: params[:rent])
@@ -44,5 +39,30 @@ class PropertiesController < ApplicationController
         else
             redirect_to "/422.html"
         end
+    end
+    
+    def book_appointment
+        Rails.logger.debug "params = #{params.inspect}"
+    end
+
+    private
+
+    def apply_filter_and_sort(properties, params)
+        if params["filter"] && params["filter"] != "all"
+            properties = properties.where(property_type: params["filter"])
+        end
+
+        if params["sort"] == "rent_low_to_high"
+            properties = properties.order("rent asc")
+        elsif params["sort"] == "rent_high_to_low"
+            properties = properties.order("rent desc")
+        elsif params["sort"] == "size_low_to_high"
+            properties = properties.order("size asc")
+        elsif params["sort"] == "size_high_to_low"
+            properties = properties.order("size desc")
+        else
+            properties = properties.order("available_from asc")
+        end
+        properties
     end
 end
