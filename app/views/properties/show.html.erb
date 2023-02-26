@@ -12,14 +12,9 @@
     <div style="padding-left: 50px; float: left;">
         <div style="padding: 10px;"> Property Type: <%= @property.property_type.titlecase %> </div>
         <div style="padding: 10px;"> Property Size: <%= @property.size %> Sq.Ft </div>
-
-        <% if @property.property_manager_id == current_user.id || @property.current_occupancy&.renter_id == current_user.id %>
-            <div style="padding: 10px;"> Current Rent Per Month: $<%= @property.current_occupancy&.rent %> </div>
-            <a style="padding: 10px;" href="<%= @property.current_occupancy&.rental_agreement %>"> Rental Agreement </a>
-        <% end %>
-
-        <div style="padding: 10px;"> Rent Per Month (WEF <%= Date.today.end_of_month + 1.day %>): $<%= @property.rent %> </div>
         <div style="padding: 10px;"> Available from: <%= @property.available_from %> </div>
+        <div style="padding: 10px;"> Rent Per Month (WEF <%= Date.today.end_of_month + 1.day %>): $<%= @property.rent %> </div>
+        <div style="padding: 10px;"> Managed By: <%= @property.manager.email %> </div>
         <br>
 
         <% if current_user.Renter? && @property.current_occupancy&.renter_id != current_user.id %>
@@ -42,10 +37,22 @@
 
         <% if @property.property_manager_id == current_user.id %>
             <%= form_with model: @property, url: property_path(@property), method: :patch, local: true do |f| %>
-                <%= f.text_field :rent %>
-                <%= f.submit "Update rent" %>
+                <div class="field-wrap">
+                    <%= f.text_field :rent %>
+                </div>
+                <div class="field-wrap">
+                    <%= f.submit "Update rent" %>
+                </div>
             <% end %>
         <% end %>
+
+        <% if @property.property_manager_id == current_user.id || @property.current_occupancy&.renter_id == current_user.id %>
+            <div style="border: 2px;">
+                <div style="padding: 10px;"> Current Rent Per Month: $<%= @property.current_occupancy&.rent %> </div>
+                <a style="padding: 10px;" href="<%= @property.current_occupancy&.rental_agreement %>"> Rental Agreement </a>
+            </div>
+        <% end %>
+
         
     </div>
 </div>

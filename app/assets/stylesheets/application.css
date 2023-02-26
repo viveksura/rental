@@ -237,6 +237,8 @@ body {
 .content {
   flex-grow: 5;
   min-width: 630px;
+  overflow-y: scroll;
+  max-height: 800px;
 }
 
 
