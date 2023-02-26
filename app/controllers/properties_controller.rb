@@ -44,7 +44,7 @@ class PropertiesController < ApplicationController
             existing_appointments = Appointment.where(date: params[:date], time: params[:time]).where("property_id = ? or renter_id = ?", params[:id], current_user.id)
             if existing_appointments.blank?
                 Appointment.create!(renter_id: current_user.id, property_id: params[:id], date: params[:date], time: params[:time])
-                redirect_to "/properties/#{params[:id]}/show", notice: "Appointment Booked"
+                redirect_to "/properties/#{params[:id]}/", notice: "Appointment Booked"
             else
                 redirect_to "/422.html", notice: "Appointment not booked"
             end

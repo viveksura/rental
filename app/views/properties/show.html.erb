@@ -18,11 +18,11 @@
         <br>
 
         <% if current_user.Renter? && @property.current_occupancy&.renter_id != current_user.id %>
-            <% current_appointments = current_user.appointments.where(property_id: @property_id).where("created_at >= ?", Date.today) %>
+            <% current_appointments = current_user.appointments.where(property_id: @property.id).where("date >= ?", Date.today) %>
             <% if current_appointments.present? %>
                 <div style="padding: 10px;"> Appointments Scheduled: </div>
                 <% current_appointments.each do |appointment| %>
-                    <div> <%= "#{appointment.date} #{appointment.time}" %> </div> 
+                    <div style="padding: 10px;"> <%= "#{appointment.date} #{appointment.time}" %> </div> 
                 <% end %>
             <% else %>
                 <div style="padding: 10px;"> Schedule Visit: </div>
